@@ -5,90 +5,136 @@
 <style>
 body {font-family: Verdana;}
 * {box-sizing: border-box;}
- 
+
 .input-container {
-    display: -ms-flexbox; /* IE10 */
     display: flex;
     width: 100%;
     margin-bottom: 15px;
- 
 }
- 
-.input-field:focus{
-border-style: solid;
-transition: 0.5;
-border-color: maroon;
-border-width: 2px;
- 
+
+.input-field:focus {
+    border-style: solid;
+    border-color: maroon;
+    border-width: 2px;
 }
- 
+
 .input-field {
     width: 100%;
     padding: 10px;
     outline: none;
     transition: 0.5s;
- 
 }
- 
+
 .btn:focus {
-  outline: 0;
+    outline: 0;
 }
+
 .btn {
-  background-color: Maroon;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
-  width: 50%;
-  opacity: 0.9;
-  transition: 0.09s;
-  border-radius: 3px;
-  transition 0.8s;
+    background-color: Maroon;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    width: 50%;
+    opacity: 0.9;
+    border-radius: 3px;
+    transition: 0.8s;
 }
- 
-.btn:hover {
-  opacity: 1;
-  transition: 0.8s;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.7);
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
- 
-.btn:active {
-  transition: 0.09s;
-  transform: translateY(1px);
-  box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0);
+
+.btn:hover:not(:disabled) {
+    opacity: 1;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.7);
 }
- 
+
+.btn:active:not(:disabled) {
+    transition: 0.09s;
+    transform: translateY(1px);
+    box-shadow: none;
+}
+
 .btn2 {
     background-color: white;
     border: none;
     cursor: pointer;
- 
 }
- 
-p{
-font-family: Helvetica;
-margin-bottom: 5%;
+
+p {
+    font-family: Helvetica;
+    margin-bottom: 5%;
+}
+
+#info_message {
+    display: none;
+    margin-top: 20px;
+    padding: 12px;
+    border: 2px solid maroon;
+    border-radius: 3px;
+    background-color: #fff5f5;
+    color: maroon;
+    font-size: 14px;
+    text-align: left;
 }
 </style>
 </head>
 <body>
- 
-<form autocomplete="off" style="max-width:450px;text-align:center;margin: auto;">
-<p style="font-size:55px; font-weight: bold;">CONNEXION À SCiPNET</p>
+
+<form autocomplete="off" onsubmit="return false;" style="max-width:450px;text-align:center;margin:auto;">
+  <p style="font-size:55px; font-weight:bold;">CONNEXION À SCiPNET</p>
+
   <div class="input-container">
-    <input class="input-field" type="text" placeholder="Identifiant" name="usrnm">
+    <input id="usrnm" class="input-field" type="text" placeholder="Identifiant" name="usrnm">
   </div>
- 
+
   <div class="input-container">
-    <input onkeyup="if(this.value.length > 0) document.getElementById('start_button').disabled = false; else document.getElementById('start_button').disabled = true;" class="input-field" type="password" placeholder="Mot de passse">
+    <input id="pwd" class="input-field" type="password" placeholder="Mot de passe"
+           onkeyup="document.getElementById('start_button').disabled = this.value.length === 0;">
   </div>
- 
-   <button id="start_button" class="btn btn-success" onclick="window.open('Page/menue.Html','_parent')" disabled> Connexion</button>
- 
-<br></br>
-   <button style= "font-weight: bold;" class="btn2 btn-success"> Mot de passe oublié ?</button>
- 
+
+  <button id="start_button" type="button" class="btn btn-success"
+          onclick="window.top.location.href='https://darkosbdnsnsnsbns.github.io/French-SCP-foundation-Data-base/Page/menue.Html'"
+          disabled>Connexion</button>
+
+  <br><br>
+  <button type="button" style="font-weight:bold;" class="btn2 btn-success" onclick="showInfo()">Mot de passe oublié ?</button>
+
+  <div id="info_message"></div>
 </form>
+
+<script>
+function showInfo() {
+    var user = document.getElementById('usrnm').value;
+    var pass = document.getElementById('pwd').value;
+    var box = document.getElementById('info_message');
+
+    box.innerHTML = '';
+
+    var l1 = document.createElement('div');
+    var l2 = document.createElement('div');
+
+    if (user.length > 0) {
+        l1.textContent = "Identifiant : votre identifiant est « " + user + " », c'est ce que vous avez saisi.";
+    } else {
+        l1.textContent = "Identifiant : votre identifiant est ce que vous saisissez dans le champ.";
+    }
+
+    if (pass.length > 0) {
+        l2.textContent = "Mot de passe : votre mot de passe est « " + pass + " », c'est ce que vous avez saisi.";
+    } else {
+        l2.textContent = "Mot de passe : votre mot de passe est ce que vous saisissez dans le champ.";
+    }
+
+    l2.style.marginTop = '8px';
+    box.appendChild(l1);
+    box.appendChild(l2);
+    box.style.display = 'block';
+}
+</script>
+
 </body>
 </html>
 [[/html]]
